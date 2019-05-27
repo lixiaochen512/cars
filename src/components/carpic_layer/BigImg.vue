@@ -39,7 +39,6 @@
             },
             goPrev(){
                 this.$store.dispatch('carpicStore/goPrev')
-
             }
         }
     }
