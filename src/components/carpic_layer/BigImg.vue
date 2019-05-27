@@ -34,7 +34,13 @@
             }
         },
         methods:{
+            goNext(){
+                this.$store.dispatch('carpicStore/goNext')
+            },
+            goPrev(){
+                this.$store.dispatch('carpicStore/goPrev')
 
+            }
         }
     }
 </script>
@@ -44,6 +50,21 @@
         width: 750px;
     }
     .next{
-        background-image: url("images")
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        width: 50%;
+        height: 100%;
+        cursor: url("/images/picture-cursor-right.cur") auto;
+    }
+    .prev{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        width: 50%;
+        height: 100%;
+        cursor: url("/public/images/picture-cursor-left.cur") auto;
     }
 </style>
