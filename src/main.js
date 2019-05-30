@@ -35,6 +35,10 @@ Vue.config.productionTip = false;
 
 Vue.component('LoadingGifImage',LoadingGifImage)
 
+Vue.filter('wan',function(value){
+    return Math.round(value / 10000)
+})
+
 new Vue({
   router,
   store,

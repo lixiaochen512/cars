@@ -14,6 +14,8 @@
                     </router-link>
                 </BreadcrumbItem>
             </Breadcrumb>
+
+            
             <Content :style="{padding: '24px 0', minHeight: '280px', background: '#fff'}">
                 <Layout>
                     <Sider hide-trigger :style="{background: '#fff'}">
@@ -29,7 +31,6 @@
                     </Sider>
                     <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
                         <h1>{{$store.state.routeStore}}</h1>
-                        {{$store.state.routerStore.scolumn}}
                         <router-view></router-view>
                     </Content>
                 </Layout>

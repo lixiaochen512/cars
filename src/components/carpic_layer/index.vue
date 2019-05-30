@@ -79,6 +79,7 @@
         font-family: "times new roman";
     }
     .bigImgBox{
+        position: relative;
         float: left;
         width: 750px;
     }

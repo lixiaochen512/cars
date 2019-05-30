@@ -4,11 +4,10 @@
             <div class="unit" :style="{left:-230 * nowPage +'px'}">
                 <ul v-for="i in totalPage" :key="i">
                     <li v-for="j in 6" :key="j" 
-                    v-show='getThePic(i, j)'
+                    v-if='getThePic(i, j)'
                     :class="{cur : (i-1) * 6 + (j-1) == nowIdx}"
                     @click="changeNowIdx((i-1) * 6 + (j-1))"
                     >
-                        <!-- <LoadingGifImage :src="`${url}/images/carimages_small/${id}/${nowAlbum}/${getThePic(i,j)}`" width="105" height="70"></LoadingGifImage>  -->
                         <LoadingGifImage :src="`${url}/images/carimages_small/${id}/${nowAlbum}/${getThePic(i, j)}`" w="105" h="70" />
                     </li>
                     

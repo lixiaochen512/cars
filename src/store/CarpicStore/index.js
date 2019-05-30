@@ -43,6 +43,63 @@ export default {
             commit('changeNowAlbum', { nowAlbum })
             // 当前图片编号归0
             commit('changeNowIdx', { nowIdx: 0 })
+        },
+        goNext({commit,state}){
+            if (state.nowIdx < state.result.images[state.nowAlbum].length -1) {
+                commit('changeNowIdx', { nowIdx: state.nowIdx + 1})
+            } else {
+                // switch (state.nowAlbum) {
+                //     case "view":
+                //         commit('changeNowAlbum', { nowAlbum : "inner" })
+                //         break;
+                //     case "inner":
+                //         commit('changeNowAlbum', { nowAlbum : "engine" })
+                //         break;
+                //     case "engine":
+                //         commit('changeNowAlbum', { nowAlbum : "more" })
+                //         break;
+                //     case "more":
+                //         commit('changeNowAlbum', { nowAlbum : "view" })
+                //         break;
+                    
+                // }
+                // commit('changeNowIdx', { nowIdx: 0})
+                var arr = ['view','inner','engine','more'];
+                var index = arr.indexOf(state.nowAlbum);
+                index = index >= 3 ? 0 : index + 1;
+                commit('changeNowAlbum', { nowAlbum : arr[index] });
+                commit('changeNowIdx', { nowIdx: 0})
+            }
+        },
+        goPrev({commit,state}){
+            if (state.nowIdx >0) {
+                commit('changeNowIdx', { nowIdx: state.nowIdx -1 })
+            } else {
+                // switch (state.nowAlbum) {
+                //     case "view":
+                //         commit('changeNowAlbum', { nowAlbum : "more" })
+                //         break;
+                //     case "more":
+                //         commit('changeNowAlbum', { nowAlbum : "engine" })
+                //         break;
+                //     case "engine":
+                //         commit('changeNowAlbum', { nowAlbum : "inner" })
+                //         break;
+                //     case "inner":
+                //         commit('changeNowAlbum', { nowAlbum : "view" })
+                //         break;
+                    
+                // }
+                // commit('changeNowIdx', { nowIdx: state.result.images[state.nowAlbum].length -1})
+
+                var arr = ['view','inner','engine','more'];
+                var index = arr.indexOf(state.nowAlbum);
+                index = index <= 0 ? 3 : index -1;
+                commit('changeNowAlbum', { nowAlbum : arr[index] })
+                commit('changeNowIdx', { nowIdx: state.result.images[state.nowAlbum].length -1})
+            }
         }
-    }
+
+
+    }  
 }

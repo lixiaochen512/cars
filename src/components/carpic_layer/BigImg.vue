@@ -47,15 +47,16 @@
 <style scoped>
     img{
         width: 750px;
+        height: 500px;
     }
     .next{
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         z-index: 10000;
         width: 50%;
         height: 100%;
-        cursor: url("/images/picture-cursor-right.cur") auto;
+        cursor: url("/images/picture-cursor-right.cur"),auto;
     }
     .prev{
         position: absolute;
@@ -64,6 +65,6 @@
         z-index: 10000;
         width: 50%;
         height: 100%;
-        cursor: url("/public/images/picture-cursor-left.cur") auto;
+        cursor: url("/images/picture-cursor-left.cur"),auto;
     }
 </style>

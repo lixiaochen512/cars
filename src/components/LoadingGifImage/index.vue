@@ -1,28 +1,32 @@
 <template>
     <div class="wrap" :style="{width:w +'px', height:h + 'px'}">
+        <!-- 真实显示的图片 -->
         <img :src="src" :width="w" :height="h" ref="pic" style="display:none">
+        <!-- 预加载图片 -->
         <span ref="lodinggif"></span>
-
     </div>
 </template>
 
 <script>
     export default {
-        props:['src','w','h'],
-        beforeCreate(){
-            this.$refs.lodinggif.style.display = "block";
+        props: ['src', 'w', 'h'],
+        // 当数据发生变化的生命周期（当切换图片时）
+        beforeUpdate(){
+            this.$refs.lodinggif.style.display = 'block'; 
             this.init()
         },
-        mounted(){
+        mounted() {
             this.init()
         },
-        methods:{
+        methods: {
             init(){
                 const img = new Image();
-                img.src = this.src;
+                // 让图片对象的src设置为传入的props的src
+                img.src = this.src
+                // 图片加载完毕显示图片，隐藏loading图
                 img.onload = ()=>{
-                    this.$refs.pic.style.display = "block";
-                    this.$refs.lodinggif.style.display = "none";
+                    this.$refs.pic.style.display = 'block';  //显示真实图
+                    this.$refs.lodinggif.style.display = 'none'; //隐藏加载图
                 }
             }
         }
