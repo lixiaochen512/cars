@@ -1,50 +1,99 @@
 <template>
-    <div>
-        <!-- 预览图 -->
-        <img :src="imgUrl" v-if="imgUrl">
+    <div class="wrap">
+        <!-- 模拟上传表单按钮 -->
+        <div class="BeautfulBtn" @click="BeautfulBtn">好看的按钮</div>
+        <input hidden type="file" ref="fileCtrl" @change="changeHandle" multiple>
 
-        <input type="file" ref="fileCtrl" @change="changeHandle" multiple>
-        <Button type="primary" @click="upload">点击上传</Button>
+        <div class="uBox" ref="uBox">
+            <Icon class="icon" size=52 type="ios-cloud-upload-outline" />
+            <TheOneItem v-for="(file,index) in files" :key="index" :file="file"></TheOneItem>
+        </div>
     </div>
 </template>
 
 <script>
+    import TheOneItem from './TheOneItem.vue'
     export default {
+        components:{
+            TheOneItem
+        },
         data(){
             return {
-                imgUrl: ''
+                files:[]
             }
         },
-        methods:{
-            changeHandle(){
-                // 创建文件读取器
-                const fileReader = new FileReader();
-                //获取用户选择的文件，转换URL地址为base64编码
-                fileReader.readAsDataURL(this.$refs.fileCtrl.files[0])
-                console.log(fileReader)
-                // 转换完毕（此时还没上传）
-                fileReader.onload = (e)=>{
-                    this.imgUrl = e.target.result;  //将base64图片存储到本地渲染
-                }
+        mounted(){
+            document.addEventListener('drop', function (e) {
+                e.preventDefault()
+            }, true)
 
+            document.addEventListener('dragenter', function (e) {
+                e.preventDefault()
+            }, true)
+
+            document.addEventListener('dragleave', function (e) {
+                e.preventDefault()
+            }, true)
+            
+            document.addEventListener('dragover', function (e) {
+                e.preventDefault()
+            }, true)
+
+            // 给uBox添加拖拽监听
+            this.$refs.uBox.addEventListener('drop', (e)=> {
+                e.preventDefault()
+                console.log(e)
+                this.files = e.dataTransfer.files;  //拖拽上传得到的图片数组
+            }, true)
+            
+        },
+        methods:{
+            BeautfulBtn(){
+                // var clickEvent = document.createEvent('MouseEvent');
+                var clickEvent=new MouseEvent('click');  //模拟鼠标事件
+                // 2.初始化一个click事件
+                // clickEvent.initMouseEvent('click',false,false,window,0,0,0,0,0,false,false,false,false,0,null); 
+                this.$refs.fileCtrl.dispatchEvent(clickEvent)
             },
-            upload(){
-                const form = new FormData()
-                form.append('file',this.$refs.fileCtrl.files[0])
-                // console.log(form)
-                const xhr = new XMLHttpRequest()
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        // console.log(xhr)
-                    }
-                }
-                xhr.open('post','http://127.0.0.1:3000/upload',true)
-                xhr.send(form)                
+            changeHandle(){
+                this.files = this.$refs.fileCtrl.files
+                console.log(this.files)
             }
+
         }
     }
+    
 </script>
 
 <style scoped>
-
+    .uBox {
+        position: relative;
+        min-height: 200px;
+        overflow: hidden;
+        border: 1px dotted blue;
+        margin:20px;
+    }
+    .icon {
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+    }
+    .wrap {
+        overflow: hidden;
+    }
+    .BeautfulBtn {
+        width: 150px;
+        height: 50px;
+        background: skyblue;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        font-size:16px;
+    }
+    .BeautfulBtn:hover {
+        background: gold;
+    }
 </style>
