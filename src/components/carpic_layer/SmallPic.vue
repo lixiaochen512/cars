@@ -8,7 +8,8 @@
                     :class="{cur : (i-1) * 6 + (j-1) == nowIdx}"
                     @click="changeNowIdx((i-1) * 6 + (j-1))"
                     >
-                        <LoadingGifImage :src="`${url}/images/carimages_small/${id}/${nowAlbum}/${getThePic(i, j)}`" w="105" h="70" />
+                        <!-- <LoadingGifImage :src="`${url}/images/carimages_small/${id}/${nowAlbum}/${getThePic(i, j)}`" w="105" h="70" /> -->
+                        <LoadingGifImage :src="`http://127.0.0.1:3000/images/carimages/carimages/${id}/${nowAlbum}/${getThePic(i, j)}`" w="105" h="70" />
                     </li>
                     
                 </ul>

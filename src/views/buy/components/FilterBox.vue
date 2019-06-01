@@ -24,11 +24,22 @@
                 <div v-if="f.type == '日期范围'">
                     <DatePicker type="daterange" placeholder="请输入时间" style="width: 200px" split-panels
                     :value="getVbyK(f.english,f.type)"
-                    @on-change=changeFilters(f.english,$event,f.type)
+                    @on-change='changeFilters(f.english,$event,f.type)'
                     ></DatePicker>
                 </div> 
             </Col>
-                <!-- {{getVbyK(f.english,f.type)}}  -->
+        </Row>
+
+        <Row>
+            <Col span="4">当前：</Col>
+            <Col span="20">
+                <Tag type="dot" closable color="warning"
+                v-for="item in filters" :key="item.k"
+                @on-close="delTag(item.k,$event)"
+                >
+                {{showTagK(item.k)}}：{{showTagV(item.k,item.v)}}
+                </Tag>
+            </Col>
         </Row>
     </div>
 </template>
@@ -36,6 +47,7 @@
 <script>
     import filterBox from "../utils/filterBox.js"
     import MyInputNumber from "./MyInputNumber.vue"
+    import dictionary from "../utils/dictionary.js"
     import moment from "moment"
     export default {
         data(){
@@ -49,6 +61,23 @@
             }
         },
         methods:{
+            showTagK(k){
+                return dictionary[k]
+            },
+            showTagV(k,v){
+                if (k === "brand" || k === "color" || k === "engine" || k === "fuel" || k === "gearbox" || k === "exhaust") {
+                    return v.replace(/v/g," 或 ")                   
+                }else if(k === "price"){
+                    return v.split('to').map(item=>item+"万元").join(' 到 ')
+                }else if(k === "km"){
+                    return v.split('to').map(item=>item / 10000 +"万公里").join(' 到 ')
+                }else if(k === "buydate"){
+                    return v.split('to').map(item=>moment(parseInt(item)).format('YYYY-MM')).join(' 到 ')
+                }
+            },
+            delTag(k){
+                this.$store.dispatch('largeTableStore/changeFilters',{k,v:''})
+            },
             getVbyK(k,type,min,max,rate){
                 for (let i = 0; i < this.filters.length; i++) {
                    if (this.filters[i].k == k) {
@@ -78,7 +107,6 @@
                     v=v.map(item=>item * rate).join('to')
                 }else if(type === '日期范围'){
                     v= v.map(item=>new Date(item)-0).join('to')
-                    console.log(v)
                 }
                 this.$store.dispatch('largeTableStore/changeFilters',{k,v})
             }

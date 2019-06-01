@@ -8,17 +8,34 @@
             </Col>
         </Row>
         
-        <BigTable />
+        <RadioGroup v-model="view" type="button" size="large">
+            <Radio label="table_view">表格视图</Radio>
+            <Radio label="grid_view">网格视图</Radio>
+        </RadioGroup>
+
+        <BigTable v-if="view == 'table_view'" />
+        <BigGrid v-if="view == 'grid_view'" />
+
+        <MyPage></MyPage>
     </div>
 </template>
 
 <script>
     import BigTable from './components/BigTable.vue'
     import FilterBox from './components/FilterBox.vue'
+    import MyPage from './components/MyPage.vue'
+    import BigGrid from './components/BigGrid.vue'
     export default {
+        data(){
+            return {
+                view: 'table_view'
+            }
+        },
         components:{
             BigTable,
-            FilterBox
+            FilterBox,
+            MyPage,
+            BigGrid
         },
          created(){
             this.$store.dispatch('largeTableStore/init')

@@ -1,7 +1,7 @@
 <template>
     <div v-if="id">
-        <!-- <img :src="`${url}/images/carimages/${id}/${nowAlbum}/${pic}`"/> -->
-        <LoadingGifImage :src="`${url}/images/carimages/${id}/${nowAlbum}/${pic}`" w='750px' h='500px'/>
+        <!-- <LoadingGifImage :src="`${url}/images/carimages/${id}/${nowAlbum}/${pic}`" w='750px' h='500px'/> -->
+        <LoadingGifImage :src="`http://127.0.0.1:3000/images/carimages/carimages/${id}/${nowAlbum}/${pic}`" w='750px' h='500px'/>
         <div class="next" @click="goNext()"></div>
         <div class="prev" @click="goPrev()"></div>
     </div>
